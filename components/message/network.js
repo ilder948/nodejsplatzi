@@ -32,7 +32,6 @@ router.patch('/:id', function(req, res) {
     .catch(e => {
         response.error(req, res, 'Error Interno', 500, e)
     })
-    res.send('ok')
 })
 
 module.exports = router;
