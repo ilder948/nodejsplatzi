@@ -4,7 +4,8 @@ const controller = require("./controller");
 const router = express.Router();
 
 router.get("/", function(req, res) {
-    controller.getMessages()
+    const filterMessages = req.query.user || null;
+    controller.getMessages(filterMessages)
     .then((messagesList) => {
         response.success(req, res, messagesList, 200)
     })
@@ -33,5 +34,17 @@ router.patch('/:id', function(req, res) {
         response.error(req, res, 'Error Interno', 500, e)
     })
 })
+
+router.delete('/:id', function(req, res) {
+    controller.deleteMessage(req.params.id)
+    .then(() => {
+        response.success(req, res, 'Mensaje Eliminado', 200);
+    })
+    .catch(e => {
+        response.error(req, res, 'Error al eliminar', 500, e)
+    })
+})
+
+
 
 module.exports = router;
